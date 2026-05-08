@@ -4,13 +4,19 @@ import {
   Calendar, CheckCircle, X, Search, Star, MapPin, 
   User, LogOut, CreditCard, Trash2, Wallet, 
   BedDouble, Users, Info, ChevronRight, Mail, Lock,
-  Camera, Save, Settings, ChevronLeft, Ticket, Crown, Sparkles, Eye
+  Camera, Save, Settings, ChevronLeft, Ticket, Crown, Sparkles, Eye,
+  Clock, ShieldCheck, Zap
 } from "lucide-react";
 
-// FEATURE: Image Carousel Data & Virtual Tour Links
+
+
+
+// UPDATED: Enhanced Data with Descriptions and Real-time Status
 const HOTEL_ROOMS = [
   { 
     id: 1, name: "Oceanfront Deluxe Suite", location: "Boracay", price: 12500, rating: 4.9, capacity: 2, 
+    availability: "Only 2 left",
+    description: "Experience world-class luxury with a panoramic view of the white sands. Features a private jacuzzi and personalized butler service.",
     amenities: ["King Bed", "Balcony", "Free WiFi"], 
     images: [
       "https://images.unsplash.com/photo-1590490360182-c33d57733427?q=80&w=800",
@@ -22,27 +28,31 @@ const HOTEL_ROOMS = [
   },
   { 
     id: 2, name: "Executive Twin City View", location: "Makati", price: 8900, rating: 4.7, capacity: 2, 
+    availability: "Available",
+    description: "Located in the heart of the business district, perfect for travelers who want to be close to shopping hubs and nightlife.",
     amenities: ["Twin Beds", "City View", "Breakfast"], 
     images: ["https://images.unsplash.com/photo-1631049307264-da0ec9d70304?q=80&w=800", "https://images.unsplash.com/photo-1595576508898-0ad5c879a061?q=80&w=800"],
     tourUrl: "#"
   },
   { 
     id: 3, name: "Grand Family Penthouse", location: "Cebu", price: 24000, rating: 4.8, capacity: 6, 
+    availability: "Last one!",
+    description: "The ultimate family getaway. A massive multi-room suite with a full kitchen, dining area, and exclusive access to the sky-lounge.",
     amenities: ["3 Bedrooms", "Kitchen", "Pool Access"], 
     images: ["https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=80&w=800"],
     tourUrl: "#",
     isVIP: true
   },
-  { id: 4, name: "Heritage Garden Loft", location: "Vigan", price: 6500, rating: 4.6, capacity: 3, amenities: ["Classic Decor", "Garden View", "Spa Access"], images: ["https://images.unsplash.com/photo-1611892440504-42a792e24d32?q=80&w=800"] },
-  { id: 5, name: "Durian Luxury Villa", location: "Davao City", price: 11000, rating: 4.8, capacity: 4, amenities: ["Private Pool", "Mountain View", "Eco-Friendly"], images: ["https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?q=80&w=800"] },
-  { id: 6, name: "Cloud 9 Surf Shack", location: "Siargao", price: 7200, rating: 4.9, capacity: 2, amenities: ["Surf Storage", "Outdoor Shower", "Island Tours"], images: ["https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=800"] },
-  { id: 7, name: "Limestone Cliff Resort", location: "El Nido", price: 18500, rating: 4.9, capacity: 2, amenities: ["Kayaking Incl.", "Overwater Villa", "Sunset Deck"], images: ["https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?q=80&w=800"], isVIP: true },
-  { id: 8, name: "Pine Breeze Lodge", location: "Baguio City", price: 5400, rating: 4.5, capacity: 4, amenities: ["Fireplace", "Mountain View", "Close to Park"], images: ["https://pinebreezebaguio.com/wp-content/uploads/2019/07/deluxe-e7-01-1.jpg"] },
-  { id: 9, name: "Bai Hotel", location: "Cebu City", price: 6700, rating: 4.5, capacity: 4, amenities: ["Outdoor Infinity Lap Pool", "City View"], 
+  { id: 4, name: "Heritage Garden Loft", location: "Vigan", price: 6500, rating: 4.6, capacity: 3, availability: "Available", description: "Stay in a restored colonial-era loft with modern comforts and a peaceful view of the internal Spanish courtyard.", amenities: ["Classic Decor", "Garden View", "Spa Access"], images: ["https://images.unsplash.com/photo-1611892440504-42a792e24d32?q=80&w=800"] },
+  { id: 5, name: "Durian Luxury Villa", location: "Davao City", price: 11000, rating: 4.8, capacity: 4, availability: "Limited", description: "Eco-friendly luxury nestled at the foot of Mt. Apo. Features a private infinity pool and organic garden dining.", amenities: ["Private Pool", "Mountain View", "Eco-Friendly"], images: ["https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?q=80&w=800"] },
+  { id: 6, name: "Cloud 9 Surf Shack", location: "Siargao", price: 7200, rating: 4.9, capacity: 2, availability: "Sold Out Today", description: "The premier spot for surf enthusiasts. Walking distance to the famous Cloud 9 boardwalk with island-vibes interiors.", amenities: ["Surf Storage", "Outdoor Shower", "Island Tours"], images: ["https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=800"] },
+  { id: 7, name: "Limestone Cliff Resort", location: "El Nido", price: 18500, rating: 4.9, capacity: 2, availability: "Available", description: "A secluded paradise accessible only by boat. Wake up to the sound of waves hitting the limestone cliffs.", amenities: ["Kayaking Incl.", "Overwater Villa", "Sunset Deck"], images: ["https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?q=80&w=800"], isVIP: true },
+  { id: 8, name: "Pine Breeze Lodge", location: "Baguio City", price: 5400, rating: 4.5, capacity: 4, availability: "Available", description: "Enjoy the cool mountain air in this cozy lodge. Perfect for groups looking for a rustic, fireplace-side retreat.", amenities: ["Fireplace", "Mountain View", "Close to Park"], images: ["https://pinebreezebaguio.com/wp-content/uploads/2019/07/deluxe-e7-01-1.jpg"] },
+  { id: 9, name: "Bai Hotel", location: "Cebu City", price: 6700, rating: 4.5, capacity: 4, availability: "Available", description: "Modern, chic, and vibrant. This hotel features one of the best rooftop infinity pools in the country.", 
+    amenities: ["Outdoor Infinity Lap Pool", "City View"], 
     images: ["https://cf.bstatic.com/xdata/images/hotel/max1024x768/178468323.jpg?k=639a7dcc063d34b7ff7a46b48495a97902d003c5a8fefbb9cf2b225834c72d23&o=", "https://images.summitmedia-digital.com/spotph/images/2018/11/27/bai-hotel-cebu-8.jpg"] },
 ];
 
-// COMPONENT: Image Carousel
 const RoomCarousel = ({ images }: { images: string[] }) => {
   const [idx, setIdx] = useState(0);
   if (!images || images.length === 0) return <div className="h-48 bg-slate-200 animate-pulse" />;
@@ -80,14 +90,13 @@ export default function StayFlowApp() {
   const [searchQuery, setSearchQuery] = useState("");
   const [guestFilter, setGuestFilter] = useState(1);
 
-  const [step, setStep] = useState<"dates" | "payment" | "success">("dates");
+  const [step, setStep] = useState<"dates" | "payment" | "processing" | "success">("dates");
   const [checkIn, setCheckIn] = useState("");
   const [checkOut, setCheckOut] = useState("");
   const [numGuests, setNumGuests] = useState(1);
   const [paymentType, setPaymentType] = useState("Credit Card");
   const [isLoading, setIsLoading] = useState(false);
 
-  // FEATURE: AI Recommendations Logic
   const aiRecommendations = useMemo(() => {
     return HOTEL_ROOMS
       .filter(r => r.rating >= 4.8)
@@ -115,7 +124,6 @@ export default function StayFlowApp() {
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    // FEATURE: Membership initialized on login
     const newUser = { 
       name: "James Asoy David", 
       email: "jamesasoy@gmail.com",
@@ -150,21 +158,22 @@ export default function StayFlowApp() {
   };
 
   const handleBookingConfirm = () => {
-    setIsLoading(true);
+    setStep("processing");
     setTimeout(() => {
       const reservation = {
         ...selectedRoom,
-        id: `RES-${Math.random().toString(36).substr(2, 9).toUpperCase()}`,
+        resId: `RES-${Math.random().toString(36).substr(2, 9).toUpperCase()}`,
         checkIn, checkOut,
         guests: numGuests,
         nights: stayDuration,
         total: totalCost,
+        paymentMethod: paymentType,
+        status: "Upcoming",
         dateBooked: new Date().toLocaleDateString()
       };
       setBookings([reservation, ...bookings]);
-      setIsLoading(false);
       setStep("success");
-    }, 1500);
+    }, 2500);
   };
 
   const formatPHP = (val: number) => `₱${val.toLocaleString()}`;
@@ -206,7 +215,6 @@ export default function StayFlowApp() {
 
       <main className="max-w-6xl mx-auto px-6 py-10">
         
-        {/* FEATURE: Personalized Welcome Message */}
         {user && view === "catalog" && (
           <div className="mb-8 animate-in fade-in slide-in-from-top-4 duration-700">
             <h1 className="text-3xl font-black text-slate-900">Mabuhay, {user.name.split(' ')[0]}</h1>
@@ -214,13 +222,11 @@ export default function StayFlowApp() {
           </div>
         )}
 
-        {/* VIEW: CATALOG */}
         {view === "catalog" && (
           <>
-            {/* FEATURE: AI Recommendations Strip */}
             <div className="mb-10 overflow-hidden">
               <div className="flex items-center gap-2 mb-4">
-                <h2 className="font-bold text-sm uppercase tracking-widest text-slate-400">AI Recommendations For You</h2>
+                <h2 className="font-bold text-sm uppercase tracking-widest text-slate-400">Recommendations For You</h2>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {aiRecommendations.map(room => (
@@ -256,8 +262,6 @@ export default function StayFlowApp() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {HOTEL_ROOMS.filter(r => r.capacity >= guestFilter && (r.location.toLowerCase().includes(searchQuery.toLowerCase()) || r.name.toLowerCase().includes(searchQuery.toLowerCase()))).map(room => (
                 <div key={room.id} className="bg-white border border-slate-200 rounded-2xl overflow-hidden flex flex-col hover:shadow-xl transition-shadow group">
-                  
-                  {/* FEATURE: Image Carousel replacing static image */}
                     <RoomCarousel images={room.images} />
 
                   <div className="p-6 flex-1 flex flex-col">
@@ -267,16 +271,21 @@ export default function StayFlowApp() {
                     </div>
                     <p className="text-slate-500 text-xs flex items-center gap-1 mb-2"><MapPin size={14} /> {room.location}</p>
                     
-                    {/* FEATURE: Virtual Tour & VIP Badge */}
-                    <div className="flex gap-2 mb-4">
+                    {/* NEW: Real-time Availability & Description */}
+                    <p className="text-slate-600 text-xs mb-3 line-clamp-2 italic">"{room.description}"</p>
+                    
+                    <div className="flex flex-wrap gap-2 mb-4">
                        <button className="flex items-center gap-1 text-[10px] font-bold text-blue-600 bg-blue-50 px-2 py-1 rounded-md hover:bg-blue-100 transition-colors">
                         <Eye size={12}/> Virtual Tour
                        </button>
                        {room.isVIP && (
                          <span className="flex items-center gap-1 text-[10px] font-bold text-purple-600 bg-purple-50 px-2 py-1 rounded-md">
-                           <Crown size={12}/> VIP Package
+                           <Crown size={12}/> VIP
                          </span>
                        )}
+                       <span className={`flex items-center gap-1 text-[10px] font-bold px-2 py-1 rounded-md ${room.availability.includes('Today') ? 'text-red-600 bg-red-50' : 'text-green-600 bg-green-50'}`}>
+                         <Clock size={12}/> {room.availability}
+                       </span>
                     </div>
 
                     <div className="mt-auto pt-4 border-t border-slate-100 flex justify-between items-center">
@@ -284,7 +293,13 @@ export default function StayFlowApp() {
                         <span className="text-xl font-black text-blue-900">{formatPHP(room.price)}</span>
                         <span className="text-slate-400 text-[10px] block font-bold uppercase">Base / night</span>
                       </div>
-                      <button onClick={() => handleInitiateBooking(room)} className="bg-blue-600 text-white px-5 py-2.5 rounded-xl text-sm font-bold hover:bg-blue-700 transition-all active:scale-95">Book Now</button>
+                      <button 
+                        onClick={() => handleInitiateBooking(room)} 
+                        disabled={room.availability.includes('Sold Out')}
+                        className={`px-5 py-2.5 rounded-xl text-sm font-bold transition-all active:scale-95 ${room.availability.includes('Sold Out') ? 'bg-slate-200 text-slate-400 cursor-not-allowed' : 'bg-blue-600 text-white hover:bg-blue-700'}`}
+                      >
+                        {room.availability.includes('Sold Out') ? 'Full' : 'Book Now'}
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -293,7 +308,6 @@ export default function StayFlowApp() {
           </>
         )}
 
-        {/* VIEW: PROFILE & LOYALTY SYSTEM */}
         {view === "profile" && user && (
           <div className="max-w-4xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8">
             <div className="lg:col-span-2 space-y-8">
@@ -345,23 +359,19 @@ export default function StayFlowApp() {
               </div>
             </div>
 
-            {/* FEATURE: Loyalty Rewards / Membership System & Promos */}
             <div className="space-y-6">
-              <div className="bg-gradient-to-br from-blue-700 to-blue-900 rounded-3xl p-6 text-white shadow-xl">
+              <div className="bg-gradient-to-br from-amber-400 via-yellow-500 to-amber-700 rounded-3xl p-6 text-white shadow-xl">
                 <div className="flex justify-between items-start mb-6">
-                  <div className="bg-white/20 p-2 rounded-lg backdrop-blur-md">
-                    <Crown size={24} />
-                  </div>
-                  <span className="text-[10px] font-black bg-blue-500 px-2 py-1 rounded-full uppercase">{user.tier}</span>
+                  <span className="text-[10px] font-black bg-amber-500 px-2 py-1 rounded-full uppercase">{user.tier}</span>
                 </div>
                 <div className="mb-4">
-                  <p className="text-blue-200 text-xs font-bold uppercase tracking-widest">Available Points</p>
+                  <p className="text-gray-200 text-xs font-bold uppercase tracking-widest">Available Points</p>
                   <h3 className="text-4xl font-black">{user.points}</h3>
                 </div>
                 <div className="w-full bg-white/10 h-1.5 rounded-full overflow-hidden">
-                  <div className="bg-blue-300 h-full w-[65%]" />
+                <div className="bg-amber-500 h-full w-[65%]" />
                 </div>
-                <p className="text-[10px] mt-2 text-blue-200 font-medium">750 points until Platinum Tier</p>
+                <p className="text-[10px] mt-2 text-white-200 font-medium">750 points until Platinum Tier</p>
               </div>
 
               <div className="bg-white border border-slate-200 rounded-3xl p-6">
@@ -373,10 +383,6 @@ export default function StayFlowApp() {
                     <p className="text-[10px] font-black text-slate-400 uppercase">30% OFF BORACAY</p>
                     <p className="text-sm font-bold text-blue-900">SUMMER-30</p>
                   </div>
-                  <div className="p-3 border-2 border-dashed border-slate-100 rounded-xl bg-slate-50">
-                    <p className="text-[10px] font-black text-slate-400 uppercase">NEW MEMBER GIFT</p>
-                    <p className="text-sm font-bold text-blue-900">WELCOME2026</p>
-                  </div>
                 </div>
                 <button className="w-full mt-4 py-3 text-xs font-bold text-blue-600 hover:bg-blue-50 rounded-xl transition-all">View All Rewards</button>
               </div>
@@ -384,7 +390,6 @@ export default function StayFlowApp() {
           </div>
         )}
 
-        {/* VIEW: AUTH, MY RESERVATIONS, MODAL (Unchanged logic, just ensure data flow) */}
         {view === "auth" && (
            <div className="max-w-md mx-auto mt-10">
            <div className="bg-white p-10 border border-slate-200 rounded-3xl shadow-xl">
@@ -416,7 +421,7 @@ export default function StayFlowApp() {
         )}
 
         {view === "my-trips" && (
-          <div className="max-w-2xl mx-auto">
+          <div className="max-w-3xl mx-auto">
              <h2 className="text-2xl font-bold mb-8 flex items-center gap-3 text-blue-900"><Calendar size={24} className="text-blue-600" /> My Reservations</h2>
              {bookings.length === 0 ? (
                <div className="text-center py-20 bg-white border-2 border-dashed border-slate-200 rounded-3xl">
@@ -424,22 +429,43 @@ export default function StayFlowApp() {
                  <button onClick={() => setView('catalog')} className="mt-4 text-blue-600 font-bold hover:underline">Start exploring</button>
                </div>
              ) : (
-               <div className="space-y-4">
+               <div className="space-y-6">
                  {bookings.map(b => (
-                    <div key={b.id} className="bg-white border border-slate-200 p-4 rounded-2xl flex gap-4 hover:border-blue-200 transition-colors">
-                      <img src={b.images ? b.images[0] : b.image} className="w-24 h-24 rounded-xl object-cover" />
+                    <div key={b.resId} className="bg-white border border-slate-200 p-6 rounded-3xl flex flex-col md:flex-row gap-6 hover:shadow-lg transition-all relative overflow-hidden">
+                      {/* STATUS TRACKER BAR */}
+                      <div className="absolute top-0 left-0 w-2 h-full bg-blue-600"></div>
+                      
+                      <img src={b.images ? b.images[0] : b.image} className="w-full md:w-40 h-40 rounded-2xl object-cover" />
+                      
                       <div className="flex-1">
-                        <div className="flex justify-between font-mono text-[10px] text-blue-600 font-bold uppercase mb-1">
-                          <span>{b.id}</span>
-                          <span className="text-green-600 flex items-center gap-1"><CheckCircle size={10}/> Confirmed</span>
+                        <div className="flex justify-between items-center mb-2">
+                          <span className="font-mono text-xs text-blue-600 font-bold uppercase">{b.resId}</span>
+                          <span className={`text-[10px] font-black px-2 py-1 rounded-full uppercase ${b.status === "Upcoming" ? 'bg-green-50 text-green-600' : 'bg-slate-100 text-slate-500'}`}>
+                            {b.status}
+                          </span>
                         </div>
-                        <h4 className="font-bold">{b.name}</h4>
-                        <div className="flex gap-3 text-xs text-slate-500 mt-1">
-                           <span>{b.checkIn} - {b.checkOut}</span>
-                           <span>•</span>
-                           <span className="font-bold">{b.guests} Guests</span>
+                        
+                        <h4 className="font-bold text-xl text-slate-900">{b.name}</h4>
+                        <p className="text-slate-500 text-sm mb-4 flex items-center gap-1"><MapPin size={14}/> {b.location}</p>
+                        
+                        <div className="grid grid-cols-2 gap-4 py-4 border-t border-slate-100">
+                          <div>
+                            <p className="text-[10px] font-black text-slate-400 uppercase">Check-in</p>
+                            <p className="font-bold text-sm">{b.checkIn}</p>
+                          </div>
+                          <div>
+                            <p className="text-[10px] font-black text-slate-400 uppercase">Check-out</p>
+                            <p className="font-bold text-sm">{b.checkOut}</p>
+                          </div>
                         </div>
-                        <p className="font-black text-blue-900 mt-2">{formatPHP(b.total)}</p>
+
+                        <div className="flex justify-between items-center pt-4 border-t border-slate-100">
+                           <div className="flex items-center gap-2">
+                              <div className="p-2 bg-slate-100 rounded-lg"><CreditCard size={14} className="text-slate-500"/></div>
+                              <span className="text-xs font-medium text-slate-600">{b.paymentMethod}</span>
+                           </div>
+                           <p className="font-black text-blue-900 text-lg">{formatPHP(b.total)}</p>
+                        </div>
                       </div>
                     </div>
                  ))}
@@ -449,68 +475,130 @@ export default function StayFlowApp() {
         )}
       </main>
 
-      {/* MODAL: BOOKING (Unchanged but ensuring it uses the first image of carousel) */}
+      {/* ENHANCED BOOKING MODAL */}
       {selectedRoom && user && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-sm p-4">
-           <div className="bg-white w-full max-w-4xl rounded-3xl shadow-2xl overflow-hidden flex flex-col md:flex-row max-h-[90vh]">
-            <div className="w-full md:w-80 bg-slate-50 p-8 border-r border-slate-100">
+           <div className="bg-white w-full max-w-4xl rounded-3xl shadow-2xl overflow-hidden flex flex-col md:flex-row max-h-[95vh]">
+            <div className="w-full md:w-80 bg-slate-50 p-8 border-r border-slate-100 flex flex-col">
               <button onClick={() => setSelectedRoom(null)} className="mb-6 flex items-center gap-2 text-slate-400 hover:text-slate-900 font-bold text-sm">
                 <X size={18} /> Cancel
               </button>
+              
               <img src={selectedRoom.images ? selectedRoom.images[0] : selectedRoom.image} className="w-full h-40 object-cover rounded-2xl mb-4" />
-              <h3 className="font-bold text-xl leading-tight">{selectedRoom.name}</h3>
-              <div className="mt-6 pt-6 border-t border-slate-200">
-                <div className="text-3xl font-black text-blue-600">{formatPHP(totalCost)}</div>
+              <h3 className="font-bold text-xl leading-tight mb-2">{selectedRoom.name}</h3>
+              <p className="text-xs text-slate-500 leading-relaxed mb-6">{selectedRoom.description}</p>
+              
+              <div className="mt-auto space-y-3">
+                 <div className="flex justify-between text-sm">
+                    <span className="text-slate-500">Stay Duration</span>
+                    <span className="font-bold">{stayDuration} Night{stayDuration > 1 ? 's' : ''}</span>
+                 </div>
+                 <div className="flex justify-between text-sm">
+                    <span className="text-slate-500">Guests</span>
+                    <span className="font-bold">{numGuests}</span>
+                 </div>
+                 <div className="pt-4 border-t border-slate-200">
+                   <p className="text-[10px] font-black text-slate-400 uppercase mb-1">Total Payment</p>
+                   <div className="text-3xl font-black text-blue-600">{formatPHP(totalCost)}</div>
+                 </div>
               </div>
             </div>
 
-            <div className="flex-1 p-10 overflow-y-auto">
+            <div className="flex-1 p-10 overflow-y-auto bg-white">
               {step === "dates" && (
-                <div>
-                  <h4 className="text-2xl font-bold mb-6">Stay Details</h4>
-                  {/* FEATURE: Promo Code Input in Booking */}
-                  <div className="mb-6 p-4 bg-orange-50 border border-orange-100 rounded-xl">
-                    <label className="text-[10px] font-black text-orange-600 uppercase block mb-1">Apply Promo Code</label>
-                    <div className="flex gap-2">
-                      <input type="text" placeholder="Enter code" className="flex-1 bg-white border border-orange-200 px-3 py-2 rounded-lg text-sm" />
-                      <button className="bg-orange-500 text-white px-4 py-2 rounded-lg text-xs font-bold">Apply</button>
-                    </div>
-                  </div>
-                  <div className="grid grid-cols-2 gap-6 mb-8">
+                <div className="animate-in fade-in slide-in-from-right-4">
+                  <h4 className="text-2xl font-bold mb-2">Plan your stay</h4>
+                  <p className="text-slate-500 text-sm mb-8">Select your check-in and check-out dates to continue.</p>
+                  
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-8">
                     <div>
-                      <label className="text-[10px] font-black uppercase text-slate-400 mb-2 block">Check-in</label>
-                      <input type="date" className="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl" value={checkIn} onChange={(e) => setCheckIn(e.target.value)} />
+                      <label className="text-[10px] font-black uppercase text-slate-400 mb-2 block">Check-in Date</label>
+                      <div className="relative">
+                        <Calendar className="absolute left-4 top-1/2 -translate-y-1/2 text-blue-600" size={18}/>
+                        <input type="date" className="w-full pl-12 p-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500/20 outline-none" value={checkIn} onChange={(e) => setCheckIn(e.target.value)} />
+                      </div>
                     </div>
                     <div>
-                      <label className="text-[10px] font-black uppercase text-slate-400 mb-2 block">Check-out</label>
-                      <input type="date" className="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl" value={checkOut} onChange={(e) => setCheckOut(e.target.value)} />
+                      <label className="text-[10px] font-black uppercase text-slate-400 mb-2 block">Check-out Date</label>
+                      <div className="relative">
+                        <Calendar className="absolute left-4 top-1/2 -translate-y-1/2 text-blue-600" size={18}/>
+                        <input type="date" className="w-full pl-12 p-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500/20 outline-none" value={checkOut} onChange={(e) => setCheckOut(e.target.value)} />
+                      </div>
                     </div>
                   </div>
-                  <button disabled={!checkIn || !checkOut} onClick={() => setStep("payment")} className="w-full bg-blue-600 text-white py-5 rounded-2xl font-bold">Continue to Payment</button>
+
+                  <div className="mb-8">
+                    <label className="text-[10px] font-black uppercase text-slate-400 mb-2 block">Number of Guests</label>
+                    <div className="flex items-center gap-4 bg-slate-50 p-1 rounded-xl border border-slate-200 w-fit">
+                       {[1,2,3,4].map(n => (
+                         <button key={n} onClick={() => setNumGuests(n)} className={`px-6 py-2 rounded-lg text-sm font-bold transition-all ${numGuests === n ? 'bg-white shadow-sm text-blue-600' : 'text-slate-400'}`}>{n}</button>
+                       ))}
+                    </div>
+                  </div>
+
+                  <button disabled={!checkIn || !checkOut} onClick={() => setStep("payment")} className="w-full bg-blue-600 text-white py-5 rounded-2xl font-bold shadow-lg shadow-blue-100 hover:bg-blue-700 transition-all disabled:opacity-50">Continue to Payment</button>
                 </div>
               )}
+
               {step === "payment" && (
-                <div>
-                  <h4 className="text-2xl font-bold mb-6">Payment</h4>
-                  <div className="space-y-3 mb-8">
-                    {["Credit Card", "GCash", "PayPal"].map(m => (
-                      <div key={m} onClick={() => setPaymentType(m)} className={`p-4 border-2 rounded-2xl cursor-pointer flex justify-between ${paymentType === m ? "border-blue-600 bg-blue-50" : "border-slate-100"}`}>
-                        <span className="font-bold">{m}</span>
-                        {paymentType === m && <CheckCircle size={20} className="text-blue-600" />}
+                <div className="animate-in fade-in slide-in-from-right-4">
+                  <h4 className="text-2xl font-bold mb-2">Secure Payment</h4>
+                  <p className="text-slate-500 text-sm mb-8">Choose your preferred payment method.</p>
+                  
+                  <div className="space-y-4 mb-8">
+                    {[
+                      { name: "Credit Card", icon: <CreditCard size={20}/>, tag: "Instant" },
+                      { name: "GCash", icon: <Wallet size={20}/>, tag: "Popular" },
+                      { name: "PayPal", icon: <Zap size={20}/>, tag: "International" }
+                    ].map(m => (
+                      <div key={m.name} onClick={() => setPaymentType(m.name)} className={`p-5 border-2 rounded-2xl cursor-pointer flex items-center justify-between transition-all ${paymentType === m.name ? "border-blue-600 bg-blue-50" : "border-slate-100 hover:border-slate-200"}`}>
+                        <div className="flex items-center gap-4">
+                          <div className={`p-2 rounded-lg ${paymentType === m.name ? 'bg-blue-600 text-white' : 'bg-slate-100 text-slate-500'}`}>{m.icon}</div>
+                          <div>
+                            <p className="font-bold">{m.name}</p>
+                            <p className="text-[10px] text-slate-400 font-bold uppercase">{m.tag}</p>
+                          </div>
+                        </div>
+                        {paymentType === m.name && <div className="w-5 h-5 rounded-full bg-blue-600 flex items-center justify-center text-white"><CheckCircle size={14}/></div>}
                       </div>
                     ))}
                   </div>
-                  <button onClick={handleBookingConfirm} className="w-full bg-blue-600 text-white py-5 rounded-2xl font-bold">
-                    {isLoading ? "Processing..." : `Pay ${formatPHP(totalCost)}`}
+
+                  <div className="flex items-center gap-3 p-4 bg-green-50 rounded-2xl mb-8 border border-green-100">
+                    <ShieldCheck className="text-green-600" size={24}/>
+                    <p className="text-xs text-green-700 font-medium">Your payment is encrypted and secure. StayFlow never stores your card details.</p>
+                  </div>
+
+                  <button onClick={handleBookingConfirm} className="w-full bg-blue-600 text-white py-5 rounded-2xl font-bold shadow-lg shadow-blue-100 hover:bg-blue-700 transition-all">
+                    Pay {formatPHP(totalCost)}
                   </button>
                 </div>
               )}
+
+              {step === "processing" && (
+                <div className="h-full flex flex-col items-center justify-center text-center">
+                   <div className="w-16 h-16 border-4 border-blue-100 border-t-blue-600 rounded-full animate-spin mb-6"></div>
+                   <h4 className="text-xl font-bold">Verifying Transaction</h4>
+                   <p className="text-slate-500 text-sm">Please do not close this window...</p>
+                </div>
+              )}
+
               {step === "success" && (
-                <div className="text-center py-10">
-                  <div className="w-20 h-20 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-6"><CheckCircle size={40} /></div>
-                  <h4 className="text-3xl font-bold mb-2">All Set!</h4>
-                  <p className="text-slate-500 mb-8">Booking details sent to {user.email}.</p>
-                  <button onClick={() => { setSelectedRoom(null); setView("my-trips"); }} className="bg-slate-900 text-white px-8 py-3 rounded-xl font-bold">View My Trips</button>
+                <div className="text-center py-6 animate-in zoom-in-95 duration-500">
+                  <div className="w-24 h-24 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-6 shadow-inner"><CheckCircle size={48} /></div>
+                  <h4 className="text-3xl font-bold mb-2">Booking Confirmed!</h4>
+                  <p className="text-slate-500 mb-8 max-w-xs mx-auto text-sm">Your reservation for <strong>{selectedRoom.name}</strong> is now secured. Check your email for the digital receipt.</p>
+                  
+                  <div className="bg-slate-50 p-6 rounded-3xl border border-slate-100 mb-8 text-left">
+                     <p className="text-[10px] font-black text-slate-400 uppercase mb-4">Reservation Snapshot</p>
+                     <div className="space-y-2 text-sm">
+                        <div className="flex justify-between"><span>Guest Name</span><span className="font-bold">{user.name}</span></div>
+                        <div className="flex justify-between"><span>Check-in</span><span className="font-bold">{checkIn}</span></div>
+                        <div className="flex justify-between"><span>Amount Paid</span><span className="font-bold text-blue-600">{formatPHP(totalCost)}</span></div>
+                     </div>
+                  </div>
+
+                  <button onClick={() => { setSelectedRoom(null); setView("my-trips"); }} className="w-full bg-slate-900 text-white py-4 rounded-2xl font-bold hover:bg-slate-800 transition-all">View My Reservations</button>
                 </div>
               )}
             </div>
